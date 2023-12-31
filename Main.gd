@@ -1,4 +1,5 @@
 extends Node
+@export var cactus_scene : PackedScene
 @export var powerup_scene : PackedScene
 @export var coin_scene : PackedScene
 @export var playtime = 30
@@ -12,15 +13,26 @@ func _ready():
 	screensize = get_viewport().get_visible_rect().size
 	$Player.screensize = screensize
 	$Player.hide()
+	print("Cactus scene is:", cactus_scene)
 	#new_game()
 
 func new_game():
+	# Clear existing obstacles
+	var obstacles = get_tree().get_nodes_in_group("obstacles")
+	for obstacle in obstacles:
+		obstacle.queue_free()
+
+	# Reset game variables
 	playing = true
 	level = 1
 	score = 0
 	time_left = playtime
+
+	# Start player
 	$Player.start()
 	$Player.show()
+
+	# Start timers and other game elements
 	$GameTimer.start()
 	spawn_coins()
 	$HUD.update_score(score)
@@ -35,11 +47,20 @@ func spawn_coins():
 		c.position = Vector2(randi_range(0, screensize.x),
 			randi_range(0, screensize.y))
 
+func spawn_cactus():
+	# This function will be called each time a new level starts
+	var cactus = cactus_scene.instantiate() # Changed from instance() to instantiate()
+	add_child(cactus)
+	cactus.screensize = screensize
+	# Randomly position the cactus
+	cactus.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
+
 func _process(delta):
 	if playing and get_tree().get_nodes_in_group("coins").size() == 0:
 		level += 1
 		time_left += 5
 		spawn_coins()
+		spawn_cactus() # Spawn the cactus for the new level
 		$PowerupTimer.wait_time = randf_range(5, 10)
 		$PowerupTimer.start()
 

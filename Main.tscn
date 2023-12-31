@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bytqcufyoyfjb"]
+[gd_scene load_steps=12 format=3 uid="uid://bytqcufyoyfjb"]
 
 [ext_resource type="Texture2D" uid="uid://cl8x8kclbtken" path="res://assets/grass.png" id="1_0rc5s"]
 [ext_resource type="Script" path="res://Main.gd" id="1_kve14"]
@@ -10,9 +10,11 @@
 [ext_resource type="AudioStream" uid="uid://ch51p7gnek2ue" path="res://assets/audio/Level.wav" id="7_n6p8l"]
 [ext_resource type="AudioStream" uid="uid://bknbbxplq3lvj" path="res://assets/audio/Powerup.wav" id="8_vpkb2"]
 [ext_resource type="AudioStream" uid="uid://r73an66866u0" path="res://assets/audio/EndSound.wav" id="8_wqbkn"]
+[ext_resource type="PackedScene" uid="uid://dnr4mn7l7iai5" path="res://Cactus.tscn" id="11_iwmea"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_kve14")
+cactus_scene = ExtResource("11_iwmea")
 powerup_scene = ExtResource("2_nxrca")
 coin_scene = ExtResource("2_6j47g")
 playtime = 45
